@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { SortingDirection, SortingValue } from './types';
-import { sortData } from './utilities';
-import ClientPagination from './components/ClientPagination/ClientPagination';
-import DataTable from './components/DataTable/DataTable';
+import { SortingDirection, SortingValue } from '../../types';
+import { sortData } from '../../utilities';
+import ClientPagination from '../ClientPagination/ClientPagination';
+import DataTable from '../DataTable/DataTable';
 import './App.css';
 
 const fetchData = async () => {
