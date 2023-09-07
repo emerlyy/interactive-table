@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from "react";
+import styles from './ClientPaginatiion.module.css';
 
 interface ClientPaginationProps {
     data: any[],
@@ -32,12 +33,14 @@ const ClientPagination = ({ data, dataPerPage, children }: ClientPaginationProps
     const currentData = data.slice(start, start + dataPerPage)
 
     return (
-        <>
+        <div className={styles.wrapper}>
             {React.cloneElement(children, { data: currentData })}
-            <button onClick={changePage(-1)}>Prev</button>
-            <span>{page}</span>
-            <button onClick={changePage(1)}>Next</button>
-        </>
+            <div className={styles.navigationWrapper}>
+                <button className={styles.button} onClick={changePage(-1)}>Prev</button>
+                <span className={styles.pageDisplay}>{page + 1}</span>
+                <button className={styles.button} onClick={changePage(1)}>Next</button>
+            </div>
+        </div>
     )
 }
 
