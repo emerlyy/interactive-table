@@ -1,12 +1,13 @@
 import { Item } from "../../types";
 
 interface DataTableRowProps {
-    item: Item;
+    item: Item,
+    styleClassName?: string;
 }
 
-const DataTableRow = ({ item }: DataTableRowProps) => {
+const DataTableRow = ({ item, styleClassName }: DataTableRowProps) => {
     return (
-        <tr>
+        <tr className={`${styleClassName}`}>
             <td>{item.id}</td>
             <td>{item.firstName}</td>
             <td>{item.lastName}</td>
