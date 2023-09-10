@@ -4,68 +4,68 @@ import SortingButton from "../SortingButton/SortingButton";
 import styles from './DataTable.module.css';
 
 interface DataTableProps {
-    data?: DataResponse,
-    sortingValue?: SortingValue,
-    sortingDirection?: SortingDirection,
-    onSortingClick: (sortingValue: SortingValue) => void
+  data?: DataResponse,
+  sortingValue?: SortingValue,
+  sortingDirection?: SortingDirection,
+  onSortingClick: (sortingValue: SortingValue) => void
 }
 
 type Column = {
-    label: string,
-    value: SortingValue
+  label: string,
+  value: SortingValue
 }
 
 const columns: Column[] = [
-    {
-        label: 'Id',
-        value: 'id'
-    },
-    {
-        label: 'First Name',
-        value: 'firstName'
-    },
-    {
-        label: 'Last Name',
-        value: 'lastName'
-    },
-    {
-        label: 'Email',
-        value: 'email'
-    },
-    {
-        label: "Phone",
-        value: 'phone'
-    },
+  {
+    label: 'Id',
+    value: 'id'
+  },
+  {
+    label: 'First Name',
+    value: 'firstName'
+  },
+  {
+    label: 'Last Name',
+    value: 'lastName'
+  },
+  {
+    label: 'Email',
+    value: 'email'
+  },
+  {
+    label: "Phone",
+    value: 'phone'
+  },
 ]
 
 const DataTable = ({ data, sortingValue, sortingDirection, onSortingClick }: DataTableProps) => {
-    return (
-        <table className={styles.table}>
-            <thead className={styles.tableHeader}>
-                <tr>
-                    {
-                        columns.map(
-                            item => {
-                                const isActive = item.value === sortingValue;
-                                return (
-                                    <th key={item.value} >
-                                        <SortingButton
-                                            label={item.label}
-                                            onButtonClick={() => onSortingClick(item.value)}
-                                            direction={isActive ? sortingDirection : undefined} />
-                                    </th>
-                                )
-                            }
-                        )
-                    }
-                </tr>
-            </thead>
-            <tbody>
+  return (
+    <table className={styles.table}>
+      <thead className={styles.tableHeader}>
+        <tr>
+          {
+            columns.map(
+              item => {
+                const isActive = item.value === sortingValue;
+                return (
+                  <th key={item.value} >
+                    <SortingButton
+                      label={item.label}
+                      onButtonClick={() => onSortingClick(item.value)}
+                      direction={isActive ? sortingDirection : undefined} />
+                  </th>
+                )
+              }
+            )
+          }
+        </tr>
+      </thead>
+      <tbody>
 
-                {data?.map(item => <DataTableRow styleClassName={styles.tableRow} key={item.phone} item={item} />)}
-            </tbody>
-        </table>
-    )
+        {data?.map(item => <DataTableRow styleClassName={styles.tableRow} key={item.phone} item={item} />)}
+      </tbody>
+    </table>
+  )
 }
 
 export default DataTable;

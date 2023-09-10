@@ -4,25 +4,24 @@ import styles from './SortingButton.module.css';
 type SortingDirection = 'asc' | 'desc'
 
 interface SortingButtonProps {
-    label: string,
-    onButtonClick: () => void,
-    direction?: SortingDirection
-
+  label: string,
+  onButtonClick: () => void,
+  direction?: SortingDirection
 }
 
 const SortingButton = ({ label, onButtonClick, direction }: SortingButtonProps) => {
-    let icon;
+  let icon;
 
-    if (direction)
-        icon = direction === 'asc' ? <TbTriangleFilled className={styles.icon} /> : <TbTriangleInvertedFilled className={styles.icon} />
+  if (direction)
+    icon = direction === 'asc' ? <TbTriangleFilled className={styles.icon} /> : <TbTriangleInvertedFilled className={styles.icon} />
 
-    return (
-        <button
-            className={styles.button}
-            onClick={onButtonClick}>
-            {label}{icon}
-        </button>
-    )
+  return (
+    <button
+      className={styles.button}
+      onClick={onButtonClick}>
+      {label}{icon}
+    </button>
+  )
 }
 
 export default SortingButton;

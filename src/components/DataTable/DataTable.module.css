@@ -1,19 +1,19 @@
 .table{
-    border-spacing: 0;
-    border-radius: 6px;
-    overflow: hidden;
+  border-spacing: 0;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .tableHeader{
-    font-size: 1.1rem;
-    font-weight: 500;
-    background-color: #f1f1f1;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: #f1f1f1;
 }
 
 td{
-    padding: 10px 10px 10px 16px
+  padding: 10px 10px 10px 16px
 }
 
 .tableRow:nth-child(2n){
-    background-color: #f1f1f1
+  background-color: #f1f1f1
 }
