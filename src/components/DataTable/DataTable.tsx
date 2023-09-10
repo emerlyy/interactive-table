@@ -47,7 +47,6 @@ const DataTable = ({ data, sortingValue, sortingDirection, onSortingClick }: Dat
                         columns.map(
                             item => {
                                 const isActive = item.value === sortingValue;
-                                console.log(isActive)
                                 return (
                                     <th key={item.value} >
                                         <SortingButton
@@ -60,15 +59,9 @@ const DataTable = ({ data, sortingValue, sortingDirection, onSortingClick }: Dat
                         )
                     }
                 </tr>
-                {/* <tr>
-                    <td><input /></td>
-                    <td><input /></td>
-                    <td><input /></td>
-                    <td><input /></td>
-                    <td><input /></td>
-                </tr> */}
             </thead>
             <tbody>
+
                 {data?.map(item => <DataTableRow styleClassName={styles.tableRow} key={item.phone} item={item} />)}
             </tbody>
         </table>
