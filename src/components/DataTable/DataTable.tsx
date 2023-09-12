@@ -40,8 +40,8 @@ const columns: Column[] = [
 
 const DataTable = ({ data, sortingValue, sortingDirection, onSortingClick }: DataTableProps) => {
   return (
-    <table className={styles.table}>
-      <thead className={styles.tableHeader}>
+    <table className={styles.dataTable}>
+      <thead>
         <tr>
           {
             columns.map(
@@ -64,7 +64,6 @@ const DataTable = ({ data, sortingValue, sortingDirection, onSortingClick }: Dat
         {
           data?.map(item => (
             <DataTableRow
-              styleClassName={styles.tableRow}
               key={item.phone}
               item={item} />
           ))
