@@ -11,7 +11,7 @@
 }
 
 .button:hover {
-  border-color: #646cff;
+  border-color: var(--main-color);
 }
 .button:focus,
 .button:focus-visible {
