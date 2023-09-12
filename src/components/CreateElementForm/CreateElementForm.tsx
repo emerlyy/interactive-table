@@ -1,5 +1,8 @@
-import { useForm, SubmitHandler, RegisterOptions } from "react-hook-form"
-import styles from './AddElementForm.module.css'
+import { MouseEventHandler } from 'react'
+import { RegisterOptions, SubmitHandler, useForm } from "react-hook-form"
+import { FaXmark } from 'react-icons/fa6'
+import Button from "../Button/Button"
+import styles from './CreateElementForm.module.css'
 
 export interface FormInputs {
   id: number,
@@ -105,10 +108,11 @@ const columns: FormInput[] = [
 ]
 
 interface AddElementFormProps {
-  onSubmit: SubmitHandler<FormInputs>
+  onSubmit: SubmitHandler<FormInputs>,
+  onClose: MouseEventHandler<HTMLButtonElement>
 }
 
-const AddElementForm = ({ onSubmit }: AddElementFormProps) => {
+const AddElementForm = ({ onSubmit, onClose }: AddElementFormProps) => {
   const {
     register,
     handleSubmit,
@@ -116,8 +120,11 @@ const AddElementForm = ({ onSubmit }: AddElementFormProps) => {
   } = useForm<FormInputs>();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <table>
+    <form className={styles.formBody} onSubmit={handleSubmit(onSubmit)}>
+      <button className={styles.closeButton} onClick={onClose}>
+        <FaXmark />
+      </button>
+      <table className={styles.table}>
         <thead>
           <tr>
             {columns.map(({ label }) => <th key={label}>{label}</th>)}
@@ -125,16 +132,21 @@ const AddElementForm = ({ onSubmit }: AddElementFormProps) => {
         </thead>
         <tbody>
           <tr>
-            {columns.map(({ input: { id, validators } }) => (
-              <td key={id}>
-                <input {...register(id, validators)} />
-                {errors[id] && errors[id]?.message}
-              </td>
-            ))}
+            {columns.map(({ input: { id, validators } }) => {
+              const hasError = errors[id];
+              return (
+                <td key={id}>
+                  <input className={`${styles.input} ${hasError && styles.error}`} {...register(id, validators)} />
+                  {hasError && (
+                    <p className={styles.errorMessage}>{errors[id]?.message}</p>
+                  )}
+                </td>
+              )
+            })}
           </tr>
         </tbody>
       </table>
-      <button>Add Element</button>
+      <Button>Submit</Button>
     </form>
   )
 }
