@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler, RegisterOptions } from "react-hook-form"
+import styles from './AddElementForm.module.css'
 
 export interface FormInputs {
   id: number,
