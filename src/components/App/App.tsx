@@ -4,12 +4,13 @@ import { SubmitHandler } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { SortingDirection, SortingValue } from '../../types';
 import { sortData } from '../../utilities';
-import CreateElementForm, { FormInputs } from '../CreateElementForm/CreateElementForm';
+import Button from '../Button/Button';
 import ClientPagination from '../ClientPagination/ClientPagination';
+import CreateElementForm, { FormInputs } from '../CreateElementForm/CreateElementForm';
 import DataTable from '../DataTable/DataTable';
 import Loading from '../Loading/Loading';
+import Overlay from '../Overlay/Overlay';
 import styles from './App.module.css';
-
 
 const fetchData = async () => {
   const { data } = await axios.get('http://www.filltext.com/?rows=300&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&delay=3&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D');
@@ -29,6 +30,8 @@ function App() {
   const [sortingValue, setSortingValue] = useState<SortingValue | null>(null);
   const [sortingDirection, setSortingDirection] = useState<SortingDirection | null>(null);
 
+  const [isFormActive, setIsFormActive] = useState(false);
+
   const changeSorting = (value: SortingValue) => {
     if (!sortingValue || !sortingValue.includes(value)) {
       setSortingValue(value);
@@ -42,6 +45,7 @@ function App() {
     response.unshift(element);
     setSortingValue(null);
     setSortingDirection(null);
+    setIsFormActive(false);
   }
 
   if (isLoading) {
@@ -56,7 +60,7 @@ function App() {
     return <h3>No data found</h3>
   }
 
-  let showingData = response
+  let showingData = response;
 
   if (sortingValue && sortingDirection) {
     showingData = sortData(response, sortingValue, sortingDirection);
@@ -64,7 +68,10 @@ function App() {
 
   return (
     <main className={styles.app}>
-      <CreateElementForm onSubmit={createElement} />
+      <Button onClick={() => setIsFormActive(true)}>Add element</Button>
+      <Overlay isOpen={isFormActive}>
+        <CreateElementForm onSubmit={createElement} onClose={() => setIsFormActive(false)} />
+      </Overlay>
       <ClientPagination data={showingData} dataPerPage={50}>
         <DataTable
           onSortingClick={changeSorting}
