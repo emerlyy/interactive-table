@@ -61,8 +61,14 @@ const DataTable = ({ data, sortingValue, sortingDirection, onSortingClick }: Dat
         </tr>
       </thead>
       <tbody>
-
-        {data?.map(item => <DataTableRow styleClassName={styles.tableRow} key={item.phone} item={item} />)}
+        {
+          data?.map(item => (
+            <DataTableRow
+              styleClassName={styles.tableRow}
+              key={item.phone}
+              item={item} />
+          ))
+        }
       </tbody>
     </table>
   )
