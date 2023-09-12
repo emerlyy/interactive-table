@@ -4,7 +4,7 @@ import { SubmitHandler } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { SortingDirection, SortingValue } from '../../types';
 import { sortData } from '../../utilities';
-import AddElementForm, { FormInputs } from '../AddElementForm/AddElementForm';
+import CreateElementForm, { FormInputs } from '../CreateElementForm/CreateElementForm';
 import ClientPagination from '../ClientPagination/ClientPagination';
 import DataTable from '../DataTable/DataTable';
 import Loading from '../Loading/Loading';
@@ -38,7 +38,7 @@ function App() {
     }
   }
 
-  const addElement: SubmitHandler<FormInputs> = (element) => {
+  const createElement: SubmitHandler<FormInputs> = (element) => {
     response.unshift(element);
     setSortingValue(null);
     setSortingDirection(null);
@@ -64,7 +64,7 @@ function App() {
 
   return (
     <main className={styles.app}>
-      <AddElementForm onSubmit={addElement} />
+      <CreateElementForm onSubmit={createElement} />
       <ClientPagination data={showingData} dataPerPage={50}>
         <DataTable
           onSortingClick={changeSorting}
