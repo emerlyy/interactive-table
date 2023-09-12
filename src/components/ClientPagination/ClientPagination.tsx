@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import styles from './ClientPaginatiion.module.css';
+import styles from './ClientPagination.module.css';
 import Button from "../Button/Button";
 
 interface ClientPaginationProps {
