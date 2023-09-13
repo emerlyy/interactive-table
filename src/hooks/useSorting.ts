@@ -2,8 +2,7 @@ import { useState } from "react";
 import { DataResponse, SortingDirection, SortingValue } from "../types";
 import { sortData } from "../utilities";
 
-export const useSorting = (initialData: DataResponse) => {
-  const [data, setData] = useState<DataResponse>(initialData)
+export const useSorting = (data: DataResponse | undefined) => {
   const [sortingValue, setSortingValue] = useState<SortingValue>(null);
   const [sortingDirection, setSortingDirection] = useState<SortingDirection>(null);
 
@@ -22,13 +21,13 @@ export const useSorting = (initialData: DataResponse) => {
     }
   }
 
-  if (sortingValue && sortingDirection) {
-    const sortedData = sortData(data, sortingValue, sortingDirection);
-    setData(sortedData);
+  let sortedData = data;
+  if (data && sortingValue && sortingDirection) {
+    sortedData = sortData(data, sortingValue, sortingDirection);
   }
 
   return {
-    data,
+    sortedData,
     sortingValue,
     sortingDirection,
     changeSorting
