@@ -1,4 +1,4 @@
-import { DataResponse, SortingDirection, SortingValue } from "../../types";
+import { DataResponse, Item, SortingDirection, SortingValue } from "../../types";
 import DataTableRow from "../DataTableRow/DataTableRow";
 import SortingButton from "../SortingButton/SortingButton";
 import styles from './DataTable.module.css';
@@ -7,7 +7,9 @@ interface DataTableProps {
   data?: DataResponse,
   sortingValue: SortingValue,
   sortingDirection: SortingDirection,
-  onSortingClick: (sortingValue: SortingValue) => void
+  onSortingClick: (sortingValue: SortingValue) => void,
+  selectedItemId?: string,
+  onItemSelect: (item: Item) => void
 }
 
 type Column = {
@@ -38,7 +40,7 @@ const columns: Column[] = [
   },
 ]
 
-const DataTable = ({ data, sortingValue = null, sortingDirection = null, onSortingClick }: DataTableProps) => {
+const DataTable = ({ data, sortingValue = null, sortingDirection = null, onSortingClick, selectedItemId, onItemSelect }: DataTableProps) => {
   return (
     <table className={styles.dataTable}>
       <thead>
@@ -62,11 +64,17 @@ const DataTable = ({ data, sortingValue = null, sortingDirection = null, onSorti
       </thead>
       <tbody>
         {
-          data?.map(item => (
-            <DataTableRow
-              key={item.phone}
-              item={item} />
-          ))
+          data?.map(item => {
+            const isSelected = item.phone === selectedItemId;
+            return (
+              <DataTableRow
+                key={item.phone}
+                item={item}
+                onSelect={() => onItemSelect(item)}
+                styleClassName={isSelected ? styles.selected : undefined}
+              />
+            )
+          })
         }
       </tbody>
     </table>
