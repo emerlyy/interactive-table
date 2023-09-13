@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { useEffect, ReactNode } from "react";
 import styles from './Overlay.module.css';
 
 interface OverlayProps {
@@ -7,6 +7,16 @@ interface OverlayProps {
 }
 
 const Overlay = ({ isOpen, children }: OverlayProps) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('noscroll');
+    }
+    return () => {
+      document.body.classList.remove('noscroll');
+    }
+  }, [isOpen])
+
+
   return (
     <>
       {isOpen && (
