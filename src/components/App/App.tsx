@@ -12,6 +12,7 @@ import Loading from '../Loading/Loading';
 import Overlay from '../Overlay/Overlay';
 import styles from './App.module.css';
 import { useSorting } from '../../hooks/useSorting';
+import { useToggle } from '../../hooks/useToggle';
 
 const fetchData = async () => {
   const { data } = await axios.get('http://www.filltext.com/?rows=300&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&delay=3&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D');
@@ -30,12 +31,18 @@ function App() {
 
   const { sortingValue, sortingDirection, changeSorting } = useSorting();
 
-  const [isFormActive, setIsFormActive] = useState(false);
+  const [isFormActive, toggleForm, setToggleForm] = useToggle();
 
   const createElement: SubmitHandler<FormInputs> = (element) => {
     response.unshift(element);
     changeSorting(null)
-    setIsFormActive(false);
+    setToggleForm(false);
+  }
+
+  let showingData = response;
+
+  if (sortingValue && sortingDirection) {
+    showingData = sortData(response, sortingValue, sortingDirection);
   }
 
   if (isLoading) {
@@ -50,17 +57,11 @@ function App() {
     return <h3>No data found</h3>
   }
 
-  let showingData = response;
-
-  if (sortingValue && sortingDirection) {
-    showingData = sortData(response, sortingValue, sortingDirection);
-  }
-
   return (
     <main className={styles.app}>
-      <Button onClick={() => setIsFormActive(true)}>Add element</Button>
+      <Button onClick={toggleForm}>Add element</Button>
       <Overlay isOpen={isFormActive}>
-        <CreateElementForm onSubmit={createElement} onClose={() => setIsFormActive(false)} />
+        <CreateElementForm onSubmit={createElement} onClose={toggleForm} />
       </Overlay>
       <ClientPagination data={showingData} dataPerPage={50}>
         <DataTable
