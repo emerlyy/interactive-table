@@ -5,9 +5,8 @@
   border-spacing: 0;
   border-radius: 6px 6px 0 0;
   overflow: hidden;
-  margin: 25px 0;
+  margin: 25px 0 0 0;
   font-size: 0.9rem;
- 
 }
 
 .dataTable thead tr {
@@ -33,7 +32,7 @@
 }
 
 .dataTable tbody tr:last-of-type {
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 2px solid var(--main-color);
 }
 
 .dataTable tbody tr.selected {
