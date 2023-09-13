@@ -11,6 +11,7 @@ import DataTable from '../DataTable/DataTable';
 import Loading from '../Loading/Loading';
 import Overlay from '../Overlay/Overlay';
 import styles from './App.module.css';
+import { useSorting } from '../../hooks/useSorting';
 
 const fetchData = async () => {
   const { data } = await axios.get('http://www.filltext.com/?rows=300&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&delay=3&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D');
@@ -27,24 +28,13 @@ function App() {
     }
   );
 
-  const [sortingValue, setSortingValue] = useState<SortingValue | null>(null);
-  const [sortingDirection, setSortingDirection] = useState<SortingDirection | null>(null);
+  const { sortingValue, sortingDirection, changeSorting } = useSorting();
 
   const [isFormActive, setIsFormActive] = useState(false);
 
-  const changeSorting = (value: SortingValue) => {
-    if (!sortingValue || !sortingValue.includes(value)) {
-      setSortingValue(value);
-      setSortingDirection('asc');
-    } else {
-      setSortingDirection(prev => prev === 'asc' ? 'desc' : 'asc');
-    }
-  }
-
   const createElement: SubmitHandler<FormInputs> = (element) => {
     response.unshift(element);
-    setSortingValue(null);
-    setSortingDirection(null);
+    changeSorting(null)
     setIsFormActive(false);
   }
 
