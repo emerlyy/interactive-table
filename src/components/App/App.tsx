@@ -11,6 +11,7 @@ import CreateElementForm, { FormInputs } from '../CreateElementForm/CreateElemen
 import DataTable from '../DataTable/DataTable';
 import Loading from '../Loading/Loading';
 import Overlay from '../Overlay/Overlay';
+import UserInfo from '../UserInfo/UserInfo';
 import styles from './App.module.css';
 
 const fetchData = async () => {
@@ -54,22 +55,23 @@ function App() {
     return <h3>No data found</h3>
   }
 
-  console.log(selectedItem)
-
   return (
     <main className={styles.app}>
-      <Button onClick={toggleForm}>Add element</Button>
-      <Overlay isOpen={isFormActive}>
-        <CreateElementForm onSubmit={createElement} onClose={toggleForm} />
-      </Overlay>
-      <ClientPagination data={data} dataPerPage={50}>
-        <DataTable
-          sortingValue={sortingValue}
-          sortingDirection={sortingDirection}
-          onSortingClick={changeSorting}
-          selectedItemId={selectedItem?.phone}
-          onItemSelect={handleItemSelect} />
-      </ClientPagination>
+      <div>
+        <Button onClick={toggleForm}>Add element</Button>
+        <Overlay isOpen={isFormActive}>
+          <CreateElementForm onSubmit={createElement} onClose={toggleForm} />
+        </Overlay>
+        <ClientPagination data={data} dataPerPage={16}>
+          <DataTable
+            sortingValue={sortingValue}
+            sortingDirection={sortingDirection}
+            onSortingClick={changeSorting}
+            selectedItemId={selectedItem?.phone}
+            onItemSelect={handleItemSelect} />
+        </ClientPagination>
+      </div>
+      {selectedItem && <UserInfo user={selectedItem} />}
     </main>
   )
 }
