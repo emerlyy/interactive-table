@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useSorting } from '../../hooks/useSorting';
@@ -29,11 +30,16 @@ function App() {
 
   const { sortedData: data, sortingValue, sortingDirection, changeSorting } = useSorting(response);
   const [isFormActive, toggleForm, setToggleForm] = useToggle();
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
   const createElement: SubmitHandler<FormInputs> = (element: Item) => {
     data?.unshift(element);
     changeSorting(null)
     setToggleForm(false);
+  }
+
+  const handleItemSelect = (item: Item) => {
+    setSelectedItem(item)
   }
 
   if (isLoading) {
@@ -48,6 +54,8 @@ function App() {
     return <h3>No data found</h3>
   }
 
+  console.log(selectedItem)
+
   return (
     <main className={styles.app}>
       <Button onClick={toggleForm}>Add element</Button>
@@ -56,9 +64,11 @@ function App() {
       </Overlay>
       <ClientPagination data={data} dataPerPage={50}>
         <DataTable
-          onSortingClick={changeSorting}
           sortingValue={sortingValue}
-          sortingDirection={sortingDirection} />
+          sortingDirection={sortingDirection}
+          onSortingClick={changeSorting}
+          selectedItemId={selectedItem?.phone}
+          onItemSelect={handleItemSelect} />
       </ClientPagination>
     </main>
   )
