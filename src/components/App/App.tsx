@@ -27,6 +27,15 @@ function App() {
     }
   );
 
+  const { sortedData: data, sortingValue, sortingDirection, changeSorting } = useSorting(response);
+  const [isFormActive, toggleForm, setToggleForm] = useToggle();
+
+  const createElement: SubmitHandler<FormInputs> = (element: Item) => {
+    data?.unshift(element);
+    changeSorting(null)
+    setToggleForm(false);
+  }
+
   if (isLoading) {
     return <Loading />
   }
@@ -35,17 +44,8 @@ function App() {
     return <h3>Error</h3>
   }
 
-  if (!response) {
+  if (!data) {
     return <h3>No data found</h3>
-  }
-
-  const [isFormActive, toggleForm, setToggleForm] = useToggle();
-  const { data, sortingValue, sortingDirection, changeSorting } = useSorting(response);
-
-  const createElement: SubmitHandler<FormInputs> = (element: Item) => {
-    data.unshift(element);
-    changeSorting(null)
-    setToggleForm(false);
   }
 
   return (
