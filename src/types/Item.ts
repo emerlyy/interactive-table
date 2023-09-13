@@ -11,6 +11,6 @@ export type Item = {
   lastName: string,
   email: string,
   phone: string,
-  address: Address,
-  description: string
+  address?: Address,
+  description?: string
 }
