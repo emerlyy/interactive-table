@@ -1,2 +1,2 @@
-export type SortingValue = 'id' | 'firstName' | 'lastName' | 'email' | 'phone'
-export type SortingDirection = 'asc' | 'desc'
+export type SortingValue = null | 'id' | 'firstName' | 'lastName' | 'email' | 'phone';
+export type SortingDirection = null | 'asc' | 'desc';
