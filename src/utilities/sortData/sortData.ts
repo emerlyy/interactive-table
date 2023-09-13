@@ -1,6 +1,6 @@
 import { DataResponse, SortingDirection, SortingValue } from "../../types"
 
-export const sortData = (data: DataResponse, sortingValue: SortingValue, sortingDirection: SortingDirection) => {
+export const sortData = (data: DataResponse, sortingValue: NonNullable<SortingValue>, sortingDirection: NonNullable<SortingDirection>) => {
   if (sortingDirection === 'asc') {
     return data.sort((a, b) => {
       if (typeof a[sortingValue] === 'number') {
