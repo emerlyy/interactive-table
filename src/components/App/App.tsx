@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useQuery } from 'react-query';
-import { DataResponse, Item, SortingDirection, SortingValue } from '../../types';
-import { sortData } from '../../utilities';
+import { useSorting } from '../../hooks/useSorting';
+import { useToggle } from '../../hooks/useToggle';
+import { DataResponse, Item } from '../../types';
 import Button from '../Button/Button';
 import ClientPagination from '../ClientPagination/ClientPagination';
 import CreateElementForm, { FormInputs } from '../CreateElementForm/CreateElementForm';
@@ -11,8 +11,6 @@ import DataTable from '../DataTable/DataTable';
 import Loading from '../Loading/Loading';
 import Overlay from '../Overlay/Overlay';
 import styles from './App.module.css';
-import { useSorting } from '../../hooks/useSorting';
-import { useToggle } from '../../hooks/useToggle';
 
 const fetchData = async () => {
   const { data } = await axios.get('http://www.filltext.com/?rows=300&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&delay=3&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D&address=%7BaddressObject%7D&description=%7Blorem%7C32%7D');
