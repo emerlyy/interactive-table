@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useQuery } from 'react-query';
-import { SortingDirection, SortingValue } from '../../types';
+import { DataResponse, Item, SortingDirection, SortingValue } from '../../types';
 import { sortData } from '../../utilities';
 import Button from '../Button/Button';
 import ClientPagination from '../ClientPagination/ClientPagination';
@@ -20,7 +20,7 @@ const fetchData = async () => {
 }
 
 function App() {
-  const { data: response, isLoading, isError } = useQuery(
+  const { data: response, isLoading, isError } = useQuery<DataResponse>(
     'data',
     fetchData,
     {
@@ -28,22 +28,6 @@ function App() {
       refetchOnWindowFocus: false
     }
   );
-
-  const { sortingValue, sortingDirection, changeSorting } = useSorting();
-
-  const [isFormActive, toggleForm, setToggleForm] = useToggle();
-
-  const createElement: SubmitHandler<FormInputs> = (element) => {
-    response.unshift(element);
-    changeSorting(null)
-    setToggleForm(false);
-  }
-
-  let showingData = response;
-
-  if (sortingValue && sortingDirection) {
-    showingData = sortData(response, sortingValue, sortingDirection);
-  }
 
   if (isLoading) {
     return <Loading />
@@ -57,17 +41,26 @@ function App() {
     return <h3>No data found</h3>
   }
 
+  const [isFormActive, toggleForm, setToggleForm] = useToggle();
+  const { data, sortingValue, sortingDirection, changeSorting } = useSorting(response);
+
+  const createElement: SubmitHandler<FormInputs> = (element: Item) => {
+    data.unshift(element);
+    changeSorting(null)
+    setToggleForm(false);
+  }
+
   return (
     <main className={styles.app}>
       <Button onClick={toggleForm}>Add element</Button>
       <Overlay isOpen={isFormActive}>
         <CreateElementForm onSubmit={createElement} onClose={toggleForm} />
       </Overlay>
-      <ClientPagination data={showingData} dataPerPage={50}>
+      <ClientPagination data={data} dataPerPage={50}>
         <DataTable
           onSortingClick={changeSorting}
-          sortingValue={sortingValue ?? undefined}
-          sortingDirection={sortingDirection ?? undefined} />
+          sortingValue={sortingValue}
+          sortingDirection={sortingDirection} />
       </ClientPagination>
     </main>
   )

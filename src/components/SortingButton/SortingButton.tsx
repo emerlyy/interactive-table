@@ -1,15 +1,14 @@
 import { TbTriangleFilled, TbTriangleInvertedFilled } from 'react-icons/tb'
 import styles from './SortingButton.module.css';
-
-type SortingDirection = 'asc' | 'desc'
+import { SortingDirection } from '../../types';
 
 interface SortingButtonProps {
   label: string,
   onButtonClick: () => void,
-  direction?: SortingDirection
+  direction: SortingDirection
 }
 
-const SortingButton = ({ label, onButtonClick, direction }: SortingButtonProps) => {
+const SortingButton = ({ label, onButtonClick, direction = null }: SortingButtonProps) => {
   let icon;
 
   if (direction)

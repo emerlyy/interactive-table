@@ -5,8 +5,8 @@ import styles from './DataTable.module.css';
 
 interface DataTableProps {
   data?: DataResponse,
-  sortingValue?: SortingValue,
-  sortingDirection?: SortingDirection,
+  sortingValue: SortingValue,
+  sortingDirection: SortingDirection,
   onSortingClick: (sortingValue: SortingValue) => void
 }
 
@@ -38,7 +38,7 @@ const columns: Column[] = [
   },
 ]
 
-const DataTable = ({ data, sortingValue, sortingDirection, onSortingClick }: DataTableProps) => {
+const DataTable = ({ data, sortingValue = null, sortingDirection = null, onSortingClick }: DataTableProps) => {
   return (
     <table className={styles.dataTable}>
       <thead>
@@ -52,7 +52,7 @@ const DataTable = ({ data, sortingValue, sortingDirection, onSortingClick }: Dat
                     <SortingButton
                       label={item.label}
                       onButtonClick={() => onSortingClick(item.value)}
-                      direction={isActive ? sortingDirection : undefined} />
+                      direction={isActive ? sortingDirection : null} />
                   </th>
                 )
               }
